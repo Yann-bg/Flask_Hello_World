@@ -1,7 +1,9 @@
 name: Preview Flask App via Ngrok
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main  # Remplace par ta branche cible si besoin
 
 jobs:
   preview:
