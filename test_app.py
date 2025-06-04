@@ -3,7 +3,7 @@ import requests
 import os
 
 def test_routes_status_code():
-    """Test que toutes les routes retournent un code 200"""
+    """Test que toutes les routes retournent un code 200."""
     
     ngrok_url = os.environ.get('NGROK_URL', '').rstrip('/')
     if not ngrok_url:
