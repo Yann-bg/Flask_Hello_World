@@ -37,16 +37,11 @@ def somme(valeur1, valeur2):
 
 @app.route('/somme_valeurs/<valeurs>')
 def somme_valeurs(valeurs):
-    # On sépare la chaîne en une liste de chaînes
     liste_valeurs = valeurs.split(',')
-
-    # On convertit chaque élément en entier
     liste_entiers = [int(v) for v in liste_valeurs]
-
-    # On calcule la somme
     total = sum(liste_entiers)
-
     return f"<h2>La somme des valeurs {liste_entiers} est : {total}</h2>"
+
 
 
                                                                                                                
