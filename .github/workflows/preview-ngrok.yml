@@ -1,0 +1,39 @@
+name: Preview Flask App via Ngrok
+
+on:
+  workflow_dispatch:  # Tu le déclenches manuellement depuis GitHub Actions
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        pip install flask
+        wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-linux-amd64.zip
+        unzip ngrok-stable-linux-amd64.zip
+        sudo mv ngrok /usr/local/bin
+        ngrok config add-authtoken ${{ secrets.NGROK_TOKEN }}
+
+    - name: Start Flask App
+      run: |
+        nohup python __init__.py &
+        sleep 5
+
+    - name: Start Ngrok and Wait
+      run: |
+        ngrok http 5000 > ngrok.log &
+        sleep 10
+        echo "Voici l'URL publique Ngrok :"
+        curl --silent http://127.0.0.1:4040/api/tunnels | grep -o 'https://[a-z0-9]*\.ngrok\.io'
+        echo "Ce lien sera actif pendant 120 secondes..."
+        sleep 120
